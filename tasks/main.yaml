@@ -14,4 +14,7 @@
       description: scl enables rpms
       baseurl: http://repos.pip2scl.dk/pip2scl.repo
 
-        
+- name:  install consul
+  ansible.builtin.package:
+    name: consul
+    state: present
