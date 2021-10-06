@@ -8,12 +8,6 @@
       description: hashicorp consul etc
       baseurl: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
 
-- name: add tools repo
-  yum_repository:
-      name: tools
-      description: tools needed in ostack
-      baseurl: http://{{ toolserver }}/tools.repo
-
 - name:  install consul
   ansible.builtin.package:
     name: consul
