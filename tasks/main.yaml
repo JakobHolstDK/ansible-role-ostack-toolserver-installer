@@ -1,0 +1,35 @@
+---
+- name: ansible-role-ostack-component-installer | install prereq for redhat
+  include: redhat.yaml
+
+
+- name: ansible-role-ostack-component-installer | create the virtual environment for the component
+  ansible.builtin.copy:
+    src: keystone.train.txt
+    dest: /etc/requirements.txt
+
+
+- name: "ansible-role-ostack-component-installer |build_virtual_environments | Cleanup - Recursively remove directory ({{ ostack_component }} - {{ ostack_version }})"
+  ansible.builtin.file:
+    path: '/var/lib/ostack/virtualenvironments/{{ ostack_component }}/{{ ostack_version }}/venv'
+    state: absent
+
+- name: " build_virtual_environments | Build a virtual environment face 1 init virtual env  ({{ ostack_component }} - {{ ostack_version }})"
+  pip:
+    name: pip
+    virtualenv: '/var/lib/ostack/virtualenvironments/{{ ostack_component }}/{{ ostack_version }}/venv'
+    state: latest
+  become: True
+
+- name: " build_virtual_environments | Build a virtual environment face 2 : update pip ({{ ostack_component }} - {{ ostack_version }})"
+  pip:
+    name: ['setuptools', 'setuptools-rust', 'wheel']
+    virtualenv: '/var/lib/ostack/virtualenvironments/{{ ostack_component }}/{{ ostack_version }}/venv/{{ ostack_component }}/{{ ostack_version }}/venv'
+    state: latest
+  become: True
+
+- name: " build_virtual_environments | Build a virtual environment for ({{ ostack_component }} - {{ ostack_version }})"
+  pip:
+    requirements: /etc/requirements.txt
+    virtualenv: '/var/lib/virtualenvironments/{{ ostack_component }}/{{ ostack_version }}/venv'
+  become: True
