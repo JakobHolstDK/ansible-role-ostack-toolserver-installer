@@ -8,11 +8,11 @@
       description: hashicorp consul etc
       baseurl: https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
 
-- name: add pip2scl repo
+- name: add tools repo
   yum_repository:
-      name: pip2scl
-      description: scl enables rpms
-      baseurl: http://repos.pip2scl.dk/pip2scl.repo
+      name: tools
+      description: tools needed in ostack
+      baseurl: http://{{ toolserver }}/tools.repo
 
 - name:  install consul
   ansible.builtin.package:
