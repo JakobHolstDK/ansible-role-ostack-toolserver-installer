@@ -1,6 +1,6 @@
 galaxy_info:
   author: IT infrastructure
-  description: Handle rabbitmq
+  description: Handle toolserver
   company: MET Norway
 
   license: GPLv2
